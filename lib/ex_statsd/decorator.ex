@@ -23,6 +23,22 @@ defmodule ExStatsD.Decorator do
     end
   end
 
+  defmacro defptimed(head, body \\ nil) do
+    {fun_name, args_ast} = Macro.decompose_call(head)
+    arg_length = length(args_ast)
+    quote do
+      @ex_statsd_metric metric_name(__MODULE__, unquote(fun_name), unquote(arg_length))
+      @ex_statsd_options metric_options(__MODULE__, unquote(fun_name), unquote(arg_length))
+      @ex_statsd_timing_function use_histogram(__MODULE__)
+      defp unquote(head) do
+        result = Kernel.apply(ExStatsD, @ex_statsd_timing_function, [@ex_statsd_metric, fn ->
+          unquote(body[:do])
+        end, @ex_statsd_options])
+        result
+      end
+    end
+  end
+
   def use_histogram(module) do
     if Module.get_attribute(module, :use_histogram) do
       :histogram_timing
