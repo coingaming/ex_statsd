@@ -3,21 +3,22 @@ defmodule ExStatsD.Mixfile do
 
   def project do
     [app: :ex_statsd,
-     version: "0.5.3",
+     version: "0.5.4",
      elixir: "~> 1.0",
      package: package(),
      deps: deps(),
      # Documentation
      name: "ex_statsd",
-     source_url: "https://github.com/CargoSense/ex_statsd",
+     source_url: "https://github.com/coingaming/ex_statsd",
      docs: [readme: true, main: "overview"]]
   end
 
   defp package do
     [description: "A StatsD client for Elixir",
-     maintainers: ["Bruce Williams"],
+     organization: "coingaming",
+     maintainers: ["Bruce Williams", "timCF"],
      licenses: ["MIT"],
-     links: %{github: "https://github.com/CargoSense/ex_statsd"}]
+     links: %{github: "https://github.com/coingaming/ex_statsd"}]
   end
 
   # Configuration for the OTP application
